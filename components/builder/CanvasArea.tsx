@@ -63,7 +63,7 @@ export default function CanvasArea({ elements, selectedElementId, onSelectElemen
                 {/* PRO TRICK: pointer-events-none taaki button/input par click karne se wo trigger na ho, 
                     balki humara onClick (select karne wala) trigger ho */}
                 <div className="pointer-events-none mt-2">
-                  <ParameterRenderer parameter={el as ParameterResponse} />
+                  <ParameterRenderer parameter={el as ParameterResponse} slug={''} />
                 </div>
               </div>
             ))}
