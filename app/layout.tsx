@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maithil Art - Auth",
-  description: "Secure Authentication System",
+  title: "Maithil Art - Builder",
+  description: "Page Builder for maithil art.",
 };
 
 export default function RootLayout({
