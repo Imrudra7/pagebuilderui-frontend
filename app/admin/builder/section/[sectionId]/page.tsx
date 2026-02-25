@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ChevronLeft, Plus, Settings, X, Loader2, Component } from 'lucide-react';
-import { parameterAPI } from '@/lib/api'; 
+import { parameterAPI } from '@/lib/api';
 
 export default function ParameterManagerPage() {
   const params = useParams();
@@ -18,12 +18,12 @@ export default function ParameterManagerPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
   const [apiError, setApiError] = useState('');
-  
+
   const [editingParamId, setEditingParamId] = useState<string | null>(null);
   const [isDeletingId, setIsDeletingId] = useState<string | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // Notice: props string format me le rahe hain taaki textarea me likh sakein
   const [formData, setFormData] = useState({
     paramKey: '',
@@ -91,7 +91,7 @@ export default function ParameterManagerPage() {
     try {
       setIsCreating(true);
       setApiError('');
-      
+
       // JSON Validate karo save karne se pehle
       let parsedProps = {};
       try {
@@ -212,7 +212,7 @@ export default function ParameterManagerPage() {
             </CardHeader>
             <CardContent className="pt-6">
               {apiError && <div className="mb-4 text-xs bg-red-100 text-red-700 p-2 rounded">{apiError}</div>}
-              
+
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
@@ -254,17 +254,49 @@ export default function ParameterManagerPage() {
 
                 <div className="grid gap-2">
                   <Label htmlFor="propsString" className="after:content-['*'] after:text-red-500">Props (JSON Format)</Label>
-                  <textarea 
-                    id="propsString" 
-                    name="propsString" 
-                    value={formData.propsString} 
-                    onChange={handleInputChange} 
+                  <textarea
+                    id="propsString"
+                    name="propsString"
+                    value={formData.propsString}
+                    onChange={handleInputChange}
                     disabled={isCreating}
-                    rows={6} 
+                    rows={6}
                     className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     placeholder='{"placeholder": "Enter email"}'
                   />
-                  <p className="text-[10px] text-muted-foreground">Must be valid JSON. E.g. {`{ "text": "Submit", "color": "blue" }`}</p>
+                  <p className="text-[10px] text-input-foreground">Must be valid JSON. E.g.
+                    {`
+                        {
+                          "text": "",
+                          "label": "Email",
+                          "methods": {
+                            "onBlur": {
+                              "methodName": "validateField"
+                            },
+                            "onChange": {
+                              "methodName": "onInputChange"
+                            }
+                          },
+                          "variant": "default",
+                          "placeholder": "Enter your email address"
+                        },
+                                                    {
+                              "alias": "Login Now",
+                              "label": "Login Now",
+                              "width": "full",
+                              "methods": {
+                                "onClick": {
+                                  "path": "/auth/login",
+                                  "action": "ON_LOGIN_SUBMIT",
+                                  "methodName": "executeClick",
+                                  "showLoader": true,
+                                  "successRedirect": "/dashboard"
+                                }
+                              },
+                              "variant": "default"
+                            }
+                      
+                    `}</p>
                 </div>
 
                 <div className="flex justify-end gap-2 mt-2 pt-4 border-t">
